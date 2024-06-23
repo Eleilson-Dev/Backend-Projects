@@ -8,4 +8,5 @@ export interface IUser {
   updatedAt: Date;
 }
 
-export type TUserOmited = Omit<IUser, 'id' | 'createdAt' | 'updatedt'>;
+export type TUserOmited = Omit<IUser, 'id' | 'createdAt' | 'updatedAt'>;
+export type TUpdateUser = Partial<TUserOmited>;

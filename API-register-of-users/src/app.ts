@@ -1,7 +1,10 @@
+import 'express-async-errors';
 import express, { json } from 'express';
-import { router } from './routes/users.routes';
+import { usersRouter } from './routes/usersRouter.routes';
+import { HandleErrors } from './errors/HandleErrors.middleware';
 
 export const app = express();
 
 app.use(json());
-app.use('/users', router);
+app.use('/users', usersRouter);
+app.use(HandleErrors.execute);
