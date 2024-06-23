@@ -1,6 +1,5 @@
 import pool from '../connection/db';
-import { generatID, usersDatabase } from '../database/database';
-import { IUser, TUpdateUser, TUserOmited } from '../interfaces/user.interface';
+import { TUpdateUser, TUserOmited } from '../interfaces/user.interface';
 
 class UsersServices {
   createUser = async (userData: TUserOmited) => {
@@ -65,8 +64,16 @@ class UsersServices {
       };
 
       await pool.query(updateQuery);
+      const userUpdated = {
+        id: userID,
+        name: newName,
+        email: newEmail,
+        work: newWork,
+        wage: newWage,
+        updatedAt: new Date(),
+      };
 
-      return { user: 'updated' };
+      return userUpdated;
     } finally {
       client.release();
     }
