@@ -1,3 +1,11 @@
+import { AnyZodObject } from 'zod';
+
+export interface IRequestSchemas {
+  params?: AnyZodObject;
+  body?: AnyZodObject;
+  query?: AnyZodObject;
+}
+
 export interface IUser {
   id: number;
   name: string;

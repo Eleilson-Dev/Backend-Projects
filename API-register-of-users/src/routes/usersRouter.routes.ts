@@ -11,8 +11,8 @@ usersRouter.get('/', usersControllers.getAll);
 
 usersRouter.post(
   '/create',
-  EmailExists.execute,
   ValidateBody.execute({ body: createUserBodySchema }),
+  EmailExists.execute,
   usersControllers.createUser
 );
 
