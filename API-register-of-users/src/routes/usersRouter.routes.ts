@@ -2,12 +2,19 @@ import { Router } from 'express';
 import { usersControllers } from '../controllers/Users.controller';
 import { IDIsValid } from '../middlewares/IDIsValid.middleware';
 import { EmailExists } from '../middlewares/EmailExists.middleware';
+import { ValidateBody } from '../middlewares/ValidateBody.middleware';
+import { createUserBodySchema } from '../schemas/createUserBodySchema.schema';
 
 export const usersRouter = Router();
 
 usersRouter.get('/', usersControllers.getAll);
 
-usersRouter.post('/create', EmailExists.execute, usersControllers.createUser);
+usersRouter.post(
+  '/create',
+  EmailExists.execute,
+  ValidateBody.execute({ body: createUserBodySchema }),
+  usersControllers.createUser
+);
 
 usersRouter.get('/user/:id', IDIsValid.execute, usersControllers.getById);
 
