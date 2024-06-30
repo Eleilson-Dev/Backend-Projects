@@ -7,19 +7,16 @@ import { IsAuthenticated } from '../middlewares/IsAuthenticated.middleware';
 
 export const agendaRouter = Router();
 
-agendaRouter.get(
-  '/user/contacts',
-  IsAuthenticated.execute,
-  userController.getAllUsers
-);
+agendaRouter.get('/users', IsAuthenticated.execute, userController.getAllUsers);
 
 agendaRouter.get(
-  '/user/contacts/:id',
+  '/user/:id',
   IsAuthenticated.execute,
   userController.getUserByID
 );
 
 agendaRouter.post('/login', IsUserExists.execute, userController.userLogin);
+
 agendaRouter.post(
   '/register',
   IsRegisterBodyValid.execute,

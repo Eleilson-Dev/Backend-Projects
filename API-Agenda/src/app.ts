@@ -15,4 +15,4 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-app.use(agendaRouter);
+app.use('/schedule', agendaRouter);
