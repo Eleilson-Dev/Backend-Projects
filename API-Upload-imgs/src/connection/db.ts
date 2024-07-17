@@ -10,6 +10,7 @@ const pool = new Pool({
 
 pool.connect((err) => {
   if (err) {
+    console.log(process.env.PGPASSWORD);
     console.error('Error connecting to database', err.stack);
   } else {
     console.log('Connected database');
@@ -18,10 +19,11 @@ pool.connect((err) => {
 
 export const ensureTableExists = async () => {
   const createTableQuery = `
-    CREATE TABLE IF NOT EXISTS products (
+    CREATE TABLE IF NOT EXISTS users (
       id SERIAL PRIMARY KEY,
-      name VARCHAR(50) NOT NULL,
-      price NUMERIC NOT NULL
+      name VARCHAR(100) NOT NULL,
+      email VARCHAR(100) NOT NULL,
+      password VARCHAR(50) NOT NULL
     );
   `;
 
