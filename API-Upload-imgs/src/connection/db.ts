@@ -20,10 +20,18 @@ pool.connect((err) => {
 export const ensureTableExists = async () => {
   const createTableQuery = `
     CREATE TABLE IF NOT EXISTS users (
-      id SERIAL PRIMARY KEY,
-      name VARCHAR(100) NOT NULL,
-      email VARCHAR(100) NOT NULL,
-      password VARCHAR(50) NOT NULL
+      "id" SERIAL PRIMARY KEY,
+      "name" VARCHAR(100) NOT NULL,
+      "email" VARCHAR(100) NOT NULL,
+      "password" VARCHAR(50) NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS users_imgs (
+      "id" SERIAL PRIMARY KEY,
+      "name" VARCHAR(250) NOT NULL,
+      "src" VARCHAR(250) NOT NULL,
+      "user_id" INTEGER NOT NULL,
+      FOREIGN KEY ("user_id") REFERENCES users("id") ON DELETE CASCADE
     );
   `;
 

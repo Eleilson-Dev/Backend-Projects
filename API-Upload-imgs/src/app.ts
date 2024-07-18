@@ -4,4 +4,4 @@ import { usersRouter } from './routes/usersRouter';
 export const app = express();
 
 app.use(json());
-app.use(usersRouter);
+app.use('/users', usersRouter);

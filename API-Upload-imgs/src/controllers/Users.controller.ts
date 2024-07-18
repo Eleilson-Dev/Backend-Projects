@@ -1,20 +1,44 @@
 import { Request, Response } from 'express';
-import pool from '../connection/db';
+import { usersServices } from '../services/Users.services';
 
 class UsersController {
-  public async register(req: Request, res: Response) {
-    const { name, email, password } = req.body;
-    const client = await pool.connect();
-
+  public async getAll(req: Request, res: Response) {
     try {
-      const result = await pool.query(
-        `INSERT INTO users ("name", "email", "password") VALUES ($1, $2, $3) RETURNING *`,
-        [name, email, password]
+      const result = await usersServices.getAll();
+      return res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  public async register(req: Request, res: Response) {
+    try {
+      const result = await usersServices.register(req.body);
+      return res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  public async getAllImgs(req: Request, res: Response) {
+    try {
+      const result = await usersServices.getAllImgs(Number(req.params.id));
+      return res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  public async sendImg(req: Request, res: Response) {
+    try {
+      const result = await usersServices.sendImg(
+        Number(req.params.id),
+        req.body
       );
 
-      return res.status(200).json(result.rows[0]);
-    } finally {
-      client.release();
+      return res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
     }
   }
 }
