@@ -19,28 +19,6 @@ class UsersController {
       console.log(error);
     }
   }
-
-  public async getAllImgs(req: Request, res: Response) {
-    try {
-      const result = await usersServices.getAllImgs(Number(req.params.id));
-      return res.status(200).json(result);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  public async sendImg(req: Request, res: Response) {
-    try {
-      const result = await usersServices.sendImg(
-        Number(req.params.id),
-        req.body
-      );
-
-      return res.status(200).json(result);
-    } catch (error) {
-      console.log(error);
-    }
-  }
 }
 
 export const usersController = new UsersController();

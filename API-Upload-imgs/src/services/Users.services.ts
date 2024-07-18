@@ -27,41 +27,6 @@ class UsersServices {
       client.release();
     }
   }
-
-  public async getAllImgs(userId: Number) {
-    const client = await pool.connect();
-
-    try {
-      const result = await pool.query(
-        ` 
-          SELECT 
-            users."id", users."name" AS "userName", users."email", 
-            users_imgs."name" AS "imgName", users_imgs."src", users_imgs."user_id" 
-          FROM users JOIN users_imgs ON users."id" = users_imgs."user_id" WHERE users."id" = $1
-        `,
-        [userId]
-      );
-
-      return result.rows;
-    } finally {
-      client.release();
-    }
-  }
-
-  public async sendImg(userId: Number, bodyImg: IBodyImg) {
-    const client = await pool.connect();
-
-    try {
-      const result = await pool.query(
-        `INSERT INTO users_imgs ("name", "src", "user_id") VALUES ($1, $2, $3) RETURNING *`,
-        [bodyImg.name, bodyImg.src, userId]
-      );
-
-      return result.rows[0];
-    } finally {
-      client.release();
-    }
-  }
 }
 
 export const usersServices = new UsersServices();
