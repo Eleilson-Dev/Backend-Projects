@@ -1,0 +1,21 @@
+const User = require('../models/User.model');
+
+class UsersController {
+  async listUsers(req, res) {
+    const users = await User.findAll();
+
+    return res.json(users);
+  }
+
+  async store(req, res) {
+    const { name, email } = req.body;
+
+    const user = await User.create({ name, email });
+
+    return res.json(user);
+  }
+}
+
+const usersController = new UsersController();
+
+module.exports = usersController;
