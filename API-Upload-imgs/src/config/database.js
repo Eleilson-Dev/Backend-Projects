@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 module.exports = {
   dialect: process.env.PG_DIALECT,
   host: process.env.PG_HOST,
