@@ -21,6 +21,13 @@ model Product {
   storageInfo StorangeInfo?
   storeId Int
   store Store @relation(fields: [storeId], references: [id])
+  categories Category[]
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+  name String
+  products Product[]
 }
 
 model StorangeInfo {
