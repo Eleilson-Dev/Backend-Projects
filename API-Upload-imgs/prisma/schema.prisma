@@ -22,12 +22,14 @@ model Product {
   storeId Int
   store Store @relation(fields: [storeId], references: [id])
   categories Category[]
+  createdAt DateTime @default(now())
 }
 
 model Category {
   id Int @id @default(autoincrement())
   name String
   products Product[]
+  createdAt DateTime @default(now())
 }
 
 model StorangeInfo {
@@ -35,10 +37,12 @@ model StorangeInfo {
   stock Int
   productId Int @unique
   product Product @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
 }
 
 model Store {
   id Int @id @default(autoincrement())
   name String
   products Product[]
+  createdAt DateTime @default(now())
 }
