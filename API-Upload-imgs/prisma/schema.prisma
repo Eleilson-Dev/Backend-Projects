@@ -14,35 +14,35 @@ datasource db {
 }
 
 model Product {
-  id Int @id @default(autoincrement())
-  name String
+  id          Int           @id @default(autoincrement())
+  name        String
   description String?
-  price Float
+  price       Float
   storageInfo StorangeInfo?
-  storeId Int
-  store Store @relation(fields: [storeId], references: [id])
-  categories Category[]
-  createdAt DateTime @default(now())
+  storeId     Int
+  store       Store         @relation(fields: [storeId], references: [id])
+  categories  Category[]
+  createdAt   DateTime      @default(now())
 }
 
 model Category {
-  id Int @id @default(autoincrement())
-  name String
-  products Product[]
-  createdAt DateTime @default(now())
+  id        Int       @id @default(autoincrement())
+  name      String
+  products  Product[]
+  createdAt DateTime  @default(now())
 }
 
 model StorangeInfo {
-  id Int @id @default(autoincrement())
-  stock Int
-  productId Int @unique
-  product Product @relation(fields: [productId], references: [id])
+  id        Int      @id @default(autoincrement())
+  stock     Int
+  productId Int      @unique
+  product   Product  @relation(fields: [productId], references: [id])
   createdAt DateTime @default(now())
 }
 
 model Store {
-  id Int @id @default(autoincrement())
-  name String
-  products Product[]
-  createdAt DateTime @default(now())
+  id        Int       @id @default(autoincrement())
+  name      String
+  products  Product[]
+  createdAt DateTime  @default(now())
 }

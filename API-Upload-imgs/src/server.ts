@@ -1,3 +1,4 @@
+import { productServices } from './services/Product.services';
 import { storeServices } from './services/Store.services';
 
 const exampleController = async () => {
@@ -6,7 +7,13 @@ const exampleController = async () => {
   //   'store2',
   //   'store3',
   // ]);
-  const response = await storeServices.findAll();
+  // const response = await storeServices.findAll();
+  // console.log(response);
+  const response = await productServices.create({
+    name: 'computador',
+    price: 2500,
+    storeId: 5,
+  });
   console.log(response);
 };
 
