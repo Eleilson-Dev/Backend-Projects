@@ -10,8 +10,18 @@ class StoreServices {
     return await prisma.store.createMany({ data: stores });
   }
 
-  public async findAll() {
-    return await prisma.store.findMany();
+  public async findOne(storeId: number) {
+    return await prisma.store.findFirst({
+      where: { id: storeId },
+      include: { products: true },
+    });
+  }
+
+  public async findAll(search?: string) {
+    return await prisma.store.findMany({
+      where: { name: { contains: search || '', mode: 'insensitive' } },
+      include: { products: true },
+    });
   }
 
   public async deleteOne(storeId: number) {
