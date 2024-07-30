@@ -1,4 +1,5 @@
 import { prisma } from '../database/prisma';
+import { TUpdateStoreBody } from '../interfaces/store.interface';
 
 class StoreServices {
   public async create(storeName: string) {
@@ -22,6 +23,14 @@ class StoreServices {
       where: { name: { contains: search || '', mode: 'insensitive' } },
       include: { products: true },
     });
+  }
+
+  public async updateOne(storeId: number, data: TUpdateStoreBody) {
+    return await prisma.store.update({ where: { id: storeId }, data });
+  }
+
+  public async updateMany(storeId: number, data: TUpdateStoreBody) {
+    return await prisma.store.update({ where: { id: storeId }, data });
   }
 
   public async deleteOne(storeId: number) {

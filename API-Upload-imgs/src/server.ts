@@ -1,8 +1,9 @@
+import { productServices } from './services/Product.services';
 import { storeServices } from './services/Store.services';
 
 const exampleController = async () => {
-  const response = await storeServices.findOne(5);
-  console.log(response);
+  // const response = await productServices.updateMany(5, { price: 4000 });
+  // console.log(response);
 };
 
 exampleController();
