@@ -13,36 +13,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Product {
-  id          Int           @id @default(autoincrement())
-  name        String
-  description String?
-  price       Float
-  storageInfo StorangeInfo?
-  storeId     Int
-  store       Store         @relation(fields: [storeId], references: [id])
-  categories  Category[]
-  createdAt   DateTime      @default(now())
-}
-
-model Category {
-  id        Int       @id @default(autoincrement())
-  name      String
-  products  Product[]
-  createdAt DateTime  @default(now())
-}
-
-model StorangeInfo {
+model User {
   id        Int      @id @default(autoincrement())
-  stock     Int
-  productId Int      @unique
-  product   Product  @relation(fields: [productId], references: [id])
+  name      String
+  email     String   @unique
   createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  images    Images[]
 }
 
-model Store {
-  id        Int       @id @default(autoincrement())
+model Images {
+  id        Int      @id @default(autoincrement())
   name      String
-  products  Product[]
-  createdAt DateTime  @default(now())
+  src       String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

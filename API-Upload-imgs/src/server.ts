@@ -1,9 +1,7 @@
-import { productServices } from './services/Product.services';
-import { storeServices } from './services/Store.services';
+import { app } from './app';
 
-const exampleController = async () => {
-  // const response = await productServices.updateMany(5, { price: 4000 });
-  // console.log(response);
-};
+const port = 3000;
 
-exampleController();
+app.listen(port, () => {
+  console.log(`API runing on http://localhost:${port}`);
+});
