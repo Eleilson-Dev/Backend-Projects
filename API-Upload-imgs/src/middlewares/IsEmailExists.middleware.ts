@@ -1,17 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
+import { prisma } from '../database/prisma';
 
 export class IsEmailExists {
   static async execute(req: Request, res: Response, next: NextFunction) {
-    if (!req.file) {
-      return res.status(400).json({ error: 'Arquivo não enviado' });
-    }
+    const user = await prisma.user.findFirst({
+      where: { email: req.body.email },
+    });
 
-    const userID = Number(req.params.userID);
-    if (isNaN(userID)) {
-      return res.status(400).json({ error: 'ID do usuário inválido' });
+    if (user) {
+      return res.status(409).json({ conflict: 'user already exists' });
     }
-
-    req.body.userID = userID;
 
     next();
   }

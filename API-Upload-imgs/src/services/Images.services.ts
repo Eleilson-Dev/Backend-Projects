@@ -1,8 +1,6 @@
 import { prisma } from '../database/prisma';
 import { IImageData } from '../interfaces/ImageData.interface';
-import path from 'path';
 import fs from 'fs';
-import { where } from 'sequelize';
 
 class ImagensServices {
   public createImage = async (imageData: IImageData) => {

@@ -7,7 +7,6 @@ export const imagesRouter = Router();
 imagesRouter.post(
   '/uploads/:userID',
   upload.single('file'),
-
   imagensController.createImage
 );
 

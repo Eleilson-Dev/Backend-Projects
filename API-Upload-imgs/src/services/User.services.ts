@@ -1,5 +1,6 @@
 import { prisma } from '../database/prisma';
 import { IUserData, TUserUpdateData } from '../interfaces/UserData.interface';
+import fs from 'fs';
 
 class UserServices {
   public findAll = async () => {
@@ -49,6 +50,19 @@ class UserServices {
 
   public deleteUser = async (userID: number) => {
     try {
+      const user = await prisma.user.findFirst({
+        where: { id: userID },
+        include: { images: true },
+      });
+
+      if (!user) {
+        return { error: 'user not found' };
+      }
+
+      user.images.forEach((image) => {
+        fs.unlinkSync(image.src);
+      });
+
       return await prisma.user.delete({ where: { id: userID } });
     } catch (error) {
       console.log(error);
