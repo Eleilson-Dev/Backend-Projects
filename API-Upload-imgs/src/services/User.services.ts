@@ -1,8 +1,39 @@
 import { prisma } from '../database/prisma';
 import { IUserData, TUserUpdateData } from '../interfaces/UserData.interface';
 import fs from 'fs';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 class UserServices {
+  public createUser = async (UserData: IUserData) => {
+    try {
+      const passwordHash = (await bcrypt.hash(UserData.password, 10)) as string;
+
+      return await prisma.user.create({
+        data: { ...UserData, password: passwordHash },
+      });
+    } catch (error) {
+      console.log(error);
+      return { error: 'internal server error' };
+    }
+  };
+
+  public login = (userData: any, userAccess: string) => {
+    const token = jwt.sign(userAccess, process.env.JWT_SECRET as string, {
+      expiresIn: '24h',
+    });
+
+    const user = {
+      id: userData.id,
+      name: userData.name,
+      email: userData.email,
+      createdAt: userData.createdAt,
+      updatedAt: userData.updatedAt,
+    };
+
+    return { user, token };
+  };
+
   public findAll = async () => {
     try {
       return await prisma.user.findMany();
@@ -18,15 +49,6 @@ class UserServices {
         where: { id: userID },
         include: { images: true },
       });
-    } catch (error) {
-      console.log(error);
-      return { error: 'internal server error' };
-    }
-  };
-
-  public createUser = async (UserData: IUserData) => {
-    try {
-      return await prisma.user.create({ data: UserData });
     } catch (error) {
       console.log(error);
       return { error: 'internal server error' };
