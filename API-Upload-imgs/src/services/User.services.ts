@@ -3,8 +3,10 @@ import { IUserData, TUserUpdateData } from '../interfaces/UserData.interface';
 import fs from 'fs';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { injectable } from 'tsyringe';
 
-class UserServices {
+@injectable()
+export class UserServices {
   public createUser = async (UserData: IUserData) => {
     try {
       const passwordHash = (await bcrypt.hash(UserData.password, 10)) as string;
@@ -92,5 +94,3 @@ class UserServices {
     }
   };
 }
-
-export const userServices = new UserServices();

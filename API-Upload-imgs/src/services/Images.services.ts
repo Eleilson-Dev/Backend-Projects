@@ -1,8 +1,10 @@
 import { prisma } from '../database/prisma';
 import { IImageData } from '../interfaces/ImageData.interface';
 import fs from 'fs';
+import { injectable } from 'tsyringe';
 
-class ImagensServices {
+@injectable()
+export class ImagesServices {
   public createImage = async (imageData: IImageData) => {
     const data = {
       name: imageData.name,
@@ -34,5 +36,3 @@ class ImagensServices {
     return { msg: 'image deleted' };
   };
 }
-
-export const imagensServices = new ImagensServices();

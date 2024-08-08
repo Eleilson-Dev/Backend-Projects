@@ -1,13 +1,19 @@
 import { Request, Response } from 'express';
-import { imagensServices } from '../services/Images.services';
+import { ImagesServices } from '../services/Images.services';
+import { inject, injectable } from 'tsyringe';
 
-class ImagensController {
+@injectable()
+export class ImagesController {
+  constructor(
+    @inject('ImagesServices') private imagesServices: ImagesServices
+  ) {}
+
   public createImage = async (req: Request, res: Response) => {
     if (!req.file) {
       return res.status(400).json({ error: 'Arquivo não enviado' });
     }
 
-    const result = await imagensServices.createImage({
+    const result = await this.imagesServices.createImage({
       name: req.body.name,
       src: req.file.path,
       userId: Number(req.params.userID),
@@ -16,11 +22,9 @@ class ImagensController {
   };
 
   public deleteImage = async (req: Request, res: Response) => {
-    const result = await imagensServices.deleteImage(
+    const result = await this.imagesServices.deleteImage(
       Number(req.params.imageID)
     );
     return res.status(200).json(result);
   };
 }
-
-export const imagensController = new ImagensController();

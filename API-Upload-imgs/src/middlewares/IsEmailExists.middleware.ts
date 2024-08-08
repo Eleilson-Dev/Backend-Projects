@@ -8,7 +8,7 @@ export class IsEmailExists {
     });
 
     if (user) {
-      return res.status(409).json({ conflict: 'user already exists' });
+      return res.status(409).json({ conflict: 'email already exists' });
     }
 
     next();
